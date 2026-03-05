@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <map>
+
 static void compute(float *output, float *input0, float *input1, int num) {
   for (int ii = 0; ii < num; ++ii) {
     output[ii] = input0[ii] + input1[ii];
@@ -15,7 +17,7 @@ static float *generate_data(int n) {
   return data;
 }
 
-static void write_data(char *file_name, float *data, int num) {
+static void write_data(const char *file_name, float *data, int num) {
   FILE *handle = fopen(file_name, "w");
   fprintf(handle, "%d", num);
   for (int ii = 0; ii < num; ii++) {
@@ -26,9 +28,9 @@ static void write_data(char *file_name, float *data, int num) {
 }
 
 static void create_dataset(int datasetNum, int dim) {
-  char *input0_file_name = "input0.raw";
-  char *input1_file_name = "input1.raw";
-  char *output_file_name = "output.raw";
+  const char *input0_file_name = "input0.raw";
+  const char *input1_file_name = "input1.raw";
+  const char *output_file_name = "output.raw";
 
   float *input0_data = generate_data(dim);
   float *input1_data = generate_data(dim);
@@ -46,15 +48,12 @@ static void create_dataset(int datasetNum, int dim) {
 }
 
 int main() {
-  create_dataset(0, 16);
-  create_dataset(1, 64);
-  create_dataset(2, 93);
-  create_dataset(3, 112);
-  create_dataset(4, 1120);
-  create_dataset(5, 9921);
-  create_dataset(6, 1233);
-  create_dataset(7, 1033);
-  create_dataset(8, 4098);
-  create_dataset(9, 4018);
+  std::map<int, int> inputs = {
+    {0, 16}, {1, 64}, {2, 93}, {3, 112}, {4, 1120}, {5, 9921},
+    {6, 1233}, {7, 1033}, {8, 4098}, {9, 4018}
+  };
+  constexpr int idx = 27;
+
+  create_dataset(idx % inputs.size(), inputs[idx % inputs.size()]);
   return 0;
 }
