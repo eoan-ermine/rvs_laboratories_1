@@ -1,1 +1,1 @@
-Исходный код работы доступен на [Compiler Explorer](https://godbolt.org/z/bsxqzPxhv)
+Исходный код работы доступен на [Compiler Explorer](https://godbolt.org/z/v4fqYzhTs)
